@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Physics Manager Test</title>
+</head>
+<body>
+    
+    <style type="text/css">
+        
+        #bowling{
+            
+            display: block;
+            margin: auto;
+            background: pink;
+         
+        }
+        
+    </style>
+    
+    <canvas id="bowling"></canvas>
+    
+    
+    <script type="text/javascript" src="bowling.js"></script>
+    
+    <script>
+        /*global Game*/
+
+        
+        // Initialize dat shit
+        Game.initialize();
+        
+        
+        Game.input.listen(Game.canvas);
+        
+        
+        
+        // Call gameLoop()
+        Game.gameLoop();
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Physics Manager Test</title>
+</head>
+<body>
+    
+    <style type="text/css">
+        
+        #bowling{
+            
+            display: block;
+            margin: auto;
+            background: pink;
+         
+        }
+        
+    </style>
+    
+    <canvas id="bowling"></canvas>
+    
+    
+    <script type="text/javascript" src="bowling.js"></script>
+    
+    <script>
+        /*global Game*/
+        // Game.initialize = function(){
+            
+        // };
+        // Initialize dat shit
+        Game.initialize();
+        Game.physics = new Game.PhysicsManager();
+        
+        Game.ball = new Ball(50, 700, "black");
+        
+        let balls = [];
+        for(var i=0; i< 500; i++){
+            var x = Game.Mathematics.randomInt(0, 300);
+            var y = Game.Mathematics.randomInt(0, 300);
+            
+            balls.push(new Ball(x, y, 'blue'));
+        }
+        
+        Game.input.listen(Game.canvas);
+        
+        Game.c = new Game.TestCircle(150, 400, 30);
+        Game.c2 = new Game.TestCircle(200, 300, 30);
+        Game.c3 = new Game.TestCircle(50, 100, 30);
+        Game.c4 = new Game.TestCircle(250, 20, 30);
+        
+        
+        Game.c.body.setVelocity({x: 0, y: 0});
+        
+        Game.update = function(delta){
+
+             
+            for(var i in balls){
+                balls[i].update(delta);
+            }
+          //  console.log(this.c.body.vel);
+            this.ball.update(delta);
+            this.c.update(delta);
+            this.c2.update(delta);
+            this.c3.update(delta);
+            this.c4.update(delta);
+            
+            Game.physics.update(delta);
+        
+        };
+        
+        Game.draw = function(){
+            
+            this.ctx.clearRect(0, 0, this.width, this.height);
+            
+            for(var i in balls){
+                balls[i].draw(this.ctx);
+            }
+            
+            this.c.draw(this.ctx);
+            this.c2.draw(this.ctx);
+            this.c3.draw(this.ctx);
+            this.c4.draw(this.ctx);
+            
+             this.ball.draw(this.ctx);
+            
+        };
+        
+        // Call gameLoop()
+        Game.gameLoop();
+    </script>
+</body>
+</html>

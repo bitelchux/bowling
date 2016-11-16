@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bowling</title>
+</head>
+<body>
+    
+    <style type="text/css">
+        
+        #bowling{
+            
+            display: block;
+            margin: auto;
+         
+        }
+        
+    </style>
+    
+    <canvas id="bowling"></canvas>
+    
+    
+    <script type="text/javascript" src="bowling.js"></script>
+    
+    <script>
+    
+        // Game.initialize = function(){
+            
+        // };
+        Game.c = new Game.TestCircle(200, 600, 30);
+        Game.c2 = new Game.TestCircle(200, 300, 30);
+        
+        Game.update = function(delta){
+            
+            this.ball.update(delta);
+            this.c.update(delta);
+            this.c2.update(delta);
+            
+            
+            if(this.c.intersects(this.ball.collision_circle)){
+                
+                console.log('Balls colliding');
+                // let finalVelocities = Game.Physics.elasticParticleCollision2D(
+                //     this.c.body.vel, 200, 
+                //     this.ball.vel, 10);
+                
+
+                let finalVelocities = Game.Physics.CirclesCollision(
+                    this.ball.vel, this.ball.pos, 100,
+                    this.c.body.vel, this.c.body.pos, 100);
+                
+                console.log(finalVelocities.v1, finalVelocities.v2);
+                this.c.body.vel = finalVelocities.v2;
+                this.ball.vel = finalVelocities.v1;
+                
+            }
+            
+            if(this.c2.intersects(this.ball.collision_circle)){
+                
+                console.log('Balls colliding');
+                // let finalVelocities = Game.Physics.elasticParticleCollision2D(
+                //     this.c.body.vel, 200, 
+                //     this.ball.vel, 10);
+                
+
+                let finalVelocities = Game.Physics.CirclesCollision(
+                    this.ball.vel, this.ball.pos, 100,
+                    this.c2.body.vel, this.c2.body.pos, 100);
+                
+                console.log(finalVelocities.v1, finalVelocities.v2);
+                this.c2.body.vel = finalVelocities.v2;
+                this.ball.vel = finalVelocities.v1;
+                
+            }
+            
+            if(this.c2.intersects(new Game.Circle(this.c.body.pos.x, this.c.body.pos.y, this.c.radius))){
+                
+                console.log('Balls colliding');
+                // let finalVelocities = Game.Physics.elasticParticleCollision2D(
+                //     this.c.body.vel, 200, 
+                //     this.ball.vel, 10);
+                
+
+                let finalVelocities = Game.Physics.CirclesCollision(
+                    this.c2.body.vel, this.c2.body.pos, 100,
+                    this.c.body.vel, this.c.body.pos, 100);
+                
+                console.log(finalVelocities.v1, finalVelocities.v2);
+                this.c.body.vel = finalVelocities.v2;
+                this.c2.body.vel = finalVelocities.v1;
+                
+            }
+            
+            
+            
+        };
+        
+        Game.draw = function(){
+            
+            this.ctx.clearRect(0, 0, this.width, this.height);
+            
+            this.c.draw(this.ctx);
+            this.c2.draw(this.ctx);
+            
+            this.ball.draw(this.ctx);
+            
+        };
+        
+        // Initialize dat shit
+        Game.initialize();
+        
+        // Call gameLoop()
+        Game.gameLoop();
+    </script>
+</body>
+</html>

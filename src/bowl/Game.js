@@ -50,18 +50,33 @@ let Game = {
         this.resetBall = new Game.Rectangle(0, 50, 68, 50, "rgba(1, 85, 175, 1)");
         
 
-      //  this.input.listen(this.canvas);
+        this.input.listen(this.canvas);
       
       
       
-        // this.input.addCallback('onmousedown', (pos) => {
-            
-        //     // console.log('Mouse position', pos);
-        //     this.reset(pos);
-            
-        // });
+        this.input.addCallback('onmousedown', this.cbOnContains(this.resetButton, this.reset));
+        this.input.addCallback('onmousedown', this.cbOnContains(this.resetBall, pos => {
+            // Reset ball velocity and position
+            Game.ball.body.setVelocity({x: 0, y: 0});
+            Game.ball.body.setPosition({x: Game.width/2, y: Game.height - 60});
+            Game.scoreboard.addScore(Game.pins.filter((p) => {return !p.isStanding; }).length);
+        }));
         
 
+    },
+    
+    
+    
+    /**
+     * Check for containment on rectangle and call cb if true.
+     * @returns {function} eventHandler - Event handler for determining collision.
+     */
+    cbOnContains(rect, cb){
+        return (pos) => {
+            if(rect.contains(pos)){
+                cb(pos);
+            }
+        };
     },
     
     
@@ -225,7 +240,7 @@ let Game = {
             
         }
         */
-        
+        window.location.reload(false);
         
         
     },

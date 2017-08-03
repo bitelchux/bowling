@@ -82,7 +82,7 @@ class Ball{
         // load image from data url
         this.image = new Image();
         
-        this.image.src = 'assets/images/eyeball.png';
+        this.image.src = 'assets/images/ball.png';
         
         
     }

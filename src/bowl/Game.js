@@ -54,12 +54,12 @@ let Game = {
       
       
       
-        this.input.addCallback('onmousedown', (pos) => {
+        // this.input.addCallback('onmousedown', (pos) => {
             
-            // console.log('Mouse position', pos);
-            this.reset(pos);
+        //     // console.log('Mouse position', pos);
+        //     this.reset(pos);
             
-        });
+        // });
         
 
     },
@@ -79,6 +79,28 @@ let Game = {
         Game.physics.update(delta);
         
         
+        // Handle reset logic
+        if(Game.ball.body.pos.y < 0)
+        {
+            
+            Game.scoreboard.addScore(Game.pins.filter((p) => {return !p.isStanding; }).length);
+            
+            if(Game.scoreboard.goToNextFrame){
+                
+                this.resetFrame();
+                
+                Game.scoreboard.goToNextFrame = false;
+                
+            }
+            else{
+                
+                this.resetBowl();
+            
+            }
+        }
+        
+        
+        
         
     },
     
@@ -94,9 +116,7 @@ let Game = {
         this.lane.draw(this.ctx);
         this.leftGutter.draw(this.ctx);
         this.rightGutter.draw(this.ctx);
-        // this.outterLeftGutter.draw(this.ctx);
-        // this.outterRightGutter.draw(this.ctx);
-        
+
         this.resetButton.draw(this.ctx);
         this.resetBall.draw(this.ctx);
         
@@ -148,9 +168,40 @@ let Game = {
     },
     
     
+    resetBowl: function(){
+        
+        Game.ball.body.setVelocity({x: 0, y: 0});
+        Game.ball.body.setPosition({x: Game.width/2, y: Game.height - 60});
+        // Game.scoreboard.addScore(Game.pins.filter((p) => {return !p.isStanding; }).length);
+        
+        
+        Game.pins.forEach((pin) => {
+            
+            if(!pin.isStanding)
+            {
+                pin.isActive = false;
+                pin.body.isBouncyCollidy = false;
+                
+            }
+            
+        });
+        
+    },
+    
+    resetFrame: function(){
+        
+        Game.ball.body.setVelocity({x: 0, y: 0});
+        Game.ball.body.setPosition({x: Game.width/2, y: Game.height - 60});
+
+        this.resetPins();
+        
+    },
+    
+    
     reset: function(pos)
     {
         
+        /*
         // If mouse is on reset button
         if(Game.resetButton.contains(pos))
         {
@@ -166,12 +217,16 @@ let Game = {
         
         if(Game.resetBall.contains(pos))
         {
+            
             // Reset ball velocity and position
             Game.ball.body.setVelocity({x: 0, y: 0});
             Game.ball.body.setPosition({x: Game.width/2, y: Game.height - 60});
             Game.scoreboard.addScore(Game.pins.filter((p) => {return !p.isStanding; }).length);
             
         }
+        */
+        
+        
         
     },
     

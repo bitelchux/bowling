@@ -213,6 +213,8 @@ class Pin{
         this.body.angle = 0;
         this.isInGutter = false;
         this.isStanding = true;
+        this.isActive = true;
+        this.body.isBouncyCollidy = true;
     }
     
     

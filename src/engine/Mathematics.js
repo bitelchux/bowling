@@ -100,4 +100,17 @@ Game.Mathematics = class Mathematics {
         
     }
     
+    
+    
+    /**
+     * Returns an array of integers from the min val to max - 1
+     */
+    static range(min, max){
+        
+        let l = [];
+        for(let i=min; i < max; i++) l.push(i);
+        return l;
+        
+    }
+    
 };

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bowling</title>
+    <title>Physics Manager Test</title>
 </head>
 <body>
     
@@ -12,22 +12,64 @@
             
             display: block;
             margin: auto;
+            background: pink;
          
         }
         
     </style>
-    
+
+    <!--<input type="number" id="num"/>-->
+    <button onclick="Game.scoreboard.addScore(parseInt(document.getElementById('num').value, 10))" value="10">Add Score</button>    
     <canvas id="bowling"></canvas>
-    
     
     <script type="text/javascript" src="bowling.js"></script>
     
     <script>
+        /*global Game*/
+
+        
         // Initialize dat shit
         Game.initialize();
         
+        
+        Game.input.listen(Game.canvas);
+        
+        
+        
         // Call gameLoop()
         Game.gameLoop();
+        
+        
+        function bowlNums(){
+            let first = Math.floor(Math.random() * (10));
+            let second =  Math.floor(Math.random() * (10 - first)) + first;
+            Game.scoreboard.addScore(first);
+            Game.scoreboard.addScore(second);
+        }
+        
+        function bowlStrike(){
+            Game.scoreboard.addScore(10);
+        }
+        
+        function bowlSpare(){
+            let first = Math.floor(Math.random() * (10));
+            Game.scoreboard.addScore(first);
+            Game.scoreboard.addScore(10);
+        }
+        
+        function bowlRands(){
+            
+        }
+        
+        function fill(){
+            
+            for(let i=0; i<12; i++){
+                // bowlNums();
+                // bowlStrike();
+                bowlSpare();
+            }
+            
+        }
     </script>
 </body>
 </html>
